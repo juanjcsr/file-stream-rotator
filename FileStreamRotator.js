@@ -159,12 +159,19 @@ FileStreamRotator.getStream = function (options) {
                     newLogfile = filename.replace('%DATE%',newDate);
                 }
 
-                if (verbose) {
+                //if (verbose) {
                     console.log("Changing logs from %s to %s", logfile, newLogfile);
-                }
+                //}
+
+                
+                rotateStream.destroy();
+
+                var a = fs.createWriteStream(filename.replace('%DATE%',curDate).replace('./log/access/','./log/rotated/access/').replace('./log/users/','./log/rotated/users/'));
+                var b = fs.createReadStream(logfile);
+                console.log(b);
+                b.pipe(a);
                 curDate = newDate;
                 logfile = newLogfile;
-                rotateStream.destroy();
                 rotateStream = fs.createWriteStream(newLogfile, {flags: 'a'});
             }
             rotateStream.write(str, encoding);
