@@ -166,7 +166,7 @@ FileStreamRotator.getStream = function (options) {
                 
                 rotateStream.destroy();
 
-                var a = fs.createWriteStream(filename.replace('%DATE%',curDate).replace('./log/access/','./log/rotated/access/').replace('./log/users/','./log/rotated/users/'));
+                var a = fs.createWriteStream(filename.replace('%DATE%',curDate).replace('./log/access/','./log/rotated-access/').replace('./log/users/','./log/rotated-users/'));
                 var b = fs.createReadStream(logfile);
                 console.log(b);
                 b.pipe(a);
